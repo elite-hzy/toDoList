@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单组件</title>
+    <link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
+    <script src="js/vue.js"></script>
+    <script src="element-ui/lib/index.js"></script>
+    <script src="js/axios-0.19.0.js"></script>
+
+</head>
+<body>
+<div id="div">
+    <form>
+        name:<br>
+        <input type="text" name="firstname" v-model="ruleForm.user_name">
+        <br>
+        password:<br>
+        <input type="password" name="lastname" v-model="ruleForm.password">
+    </form>
+    <button type="submit" @click="submitLog">提交</button>{{msg}}
+</div>
+</body>
+<script>
+
+
+    new Vue({
+        el:"#div",
+        data:{
+            ruleForm: {
+                //前端的名字 要和实体类的名字一样
+                user_name: "",
+                password:"",
+            },
+            msg:"",
+
+        },
+        methods:{
+            //登录,调用函数
+            submitLog(){
+                // console.log("test"); 测试
+                //正常需要先校验文本框有没有内容,
+                // elementUI帮忙弄了,所以不用写
+                axios.post("/login/login",this.ruleForm).then(resp=>{
+                    //先得到resultInfo
+                    let ResultInfo =resp.data;
+                    console.log(ResultInfo);
+                    if(ResultInfo.success){
+                        //成功就跳转
+                        this.msg=ResultInfo.message;
+                    }else {
+                        this.msg=ResultInfo.message;
+                    }
+                })
+            }
+
+        }
+    });
+</script>
+</html>
