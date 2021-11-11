@@ -30,7 +30,7 @@
         <el-form-item>
             <el-button type="primary" @click="submitLog">登录账号</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
-            <el-button  @click="">注册</el-button>
+            <el-button  @click="loginError">注册</el-button>
             <a>{{msg}}</a>
         </el-form-item>
     </el-form>
@@ -68,14 +68,23 @@
                     let ResultInfo =resp.data;
                     console.log(ResultInfo);
                     if(ResultInfo.success){
-                        alert("正确!");
+                        location.href = "/pages/test2.html";
                         this.msg="";
                     }else {
+                        //失败就弹出失败函数
                         this.msg=ResultInfo.message;
+                        this.loginError();
                     }
                 })
+            },
+            //失败函数
+            loginError(){
+                this.$message({
+                    showClose: true,
+                    message: '密码或用户名错误!',
+                    type: 'error'
+                });
             }
-
         }
     });
 </script>

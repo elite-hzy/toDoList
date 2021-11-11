@@ -50,11 +50,20 @@
                         //成功就跳转
                         this.msg=ResultInfo.message;
                     }else {
+                        //失败就弹出失败函数
                         this.msg=ResultInfo.message;
+                        this.loginError();
                     }
                 })
+            },
+            //失败函数
+            loginError(){
+                this.$message({
+                    showClose: true,
+                    message: '密码或用户名错误!',
+                    type: 'error'
+                });
             }
-
         }
     });
 </script>

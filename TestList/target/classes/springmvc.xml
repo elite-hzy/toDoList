@@ -22,4 +22,14 @@
 
     <!--4. 释放资源资源-->
     <mvc:default-servlet-handler/>
+
+    <!-- 配置用户权限的拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/pages/**"/>
+            <!-- 操作address的处理器 -->
+            <mvc:mapping path="/address/**"/>
+            <bean class="interceptor.UserLoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
