@@ -22,7 +22,9 @@ public class ContextController {
     @RequestMapping("/push")
     public ResultInfo quick(){
         List<Context> contextList = contextService.findAll();
-        System.out.println(contextList);
+        System.out.println("控制器里的内容:"+contextList);
+//        在控制器和业务层的时候，java的datetime还很正常 createTime=Sat Oct 30 00:03:28 CST 2021,
+//        转json的时候就出错了 一个解决就是
         return new ResultInfo(true,contextList);
     }
 }

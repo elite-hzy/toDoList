@@ -16,6 +16,9 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public List<Context> findAll() {
-        return contextDao.findAll();
+//        先测试在业务层里代码怎么样
+        List<Context> all = contextDao.findAll();
+        System.out.println(all);
+        return all;
     }
 }

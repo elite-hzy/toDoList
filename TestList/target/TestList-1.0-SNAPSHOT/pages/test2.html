@@ -13,7 +13,7 @@
     <el-table
             :data="pageBean.data"
             border
-            style="width: 50%">
+            style="width: 65%">
         <el-table-column
                 fixed
                 prop="userName"
@@ -28,7 +28,7 @@
         <el-table-column
                 prop="createTime"
                 label="创建时间"
-                width="120">
+                width="150">
         </el-table-column>
         <el-table-column
                 prop="context"
@@ -38,7 +38,7 @@
         <el-table-column
                 fixed="right"
                 label="操作"
-                width="100">
+                width="200">
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 <el-button type="text" size="small">编辑</el-button>
@@ -70,10 +70,26 @@
                 axios.post("/context/push").then(resp=>{
                     //获取到数据
                     this.pageBean = resp.data;
+                    console.log(this.pageBean);
+                    //因为json数据转进来数据变了
+                    //转过来的数据都是毫秒 所以要毫秒转时间戳
+                    this.pageBean.data.map(item=>{
+                        item.createTime=this.timestampToTime(item.createTime/1000)
+                    })
                 })
             },
-        },
 
+        timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            var D = date.getDate() + ' ';
+            var h = date.getHours() + ':';
+            var m = date.getMinutes() + ':';
+            var s = date.getSeconds();
+            return Y+M+D+h+m+s;
+        },
+        },
         //上来就先把数据放到界面里
         created(){
             this.getResource();

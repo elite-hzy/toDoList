@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--    作为测试的代码
+
+        js的日期转换
+-->
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -8,3 +12,18 @@
   <h1>test</h1>
 </body>
 </html>
+<script>
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D = date.getDate() + ' ';
+        var h = date.getHours() + ':';
+        var m = date.getMinutes() + ':';
+        var s = date.getSeconds();
+        return Y+M+D+h+m+s;
+    }
+                                    //1635523408000
+    let timestampToTime1 = timestampToTime(1636556338);
+    console.log(timestampToTime1);
+</script>
