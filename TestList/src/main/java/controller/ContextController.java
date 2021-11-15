@@ -26,6 +26,11 @@ public class ContextController {
         return new ResultInfo(true,contextList);
     }
 
+    @RequestMapping("test")
+    public ResultInfo findContextById(){
+        List<Context> contextById = contextService.findContextById();
+        return new ResultInfo(true,contextById);
+    }
 
 
 }

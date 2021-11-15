@@ -8,4 +8,7 @@ public interface ContextService {
 
     //先获取所有数据
     List<Context> findAll();
+
+    //获取部分数据
+    List<Context>findContextById();
 }

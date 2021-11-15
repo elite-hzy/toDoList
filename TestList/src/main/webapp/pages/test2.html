@@ -10,6 +10,7 @@
 </head>
 <body>
 <div id="app">
+
     <el-table
             :data="pageBean.data"
             border
@@ -67,7 +68,7 @@
             },
             //获取资源
             getResource(){
-                axios.post("/context/push").then(resp=>{
+                axios.post("/context/test").then(resp=>{
                     //获取到数据
                     this.pageBean = resp.data;
 
