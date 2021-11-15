@@ -13,7 +13,7 @@
     <el-table
             :data="pageBean.data"
             border
-            style="width: 50%">
+            style="width: 60%">
         <el-table-column
                 fixed
                 prop="userName"
@@ -70,8 +70,26 @@
                 axios.post("/context/push").then(resp=>{
                     //获取到数据
                     this.pageBean = resp.data;
+
+                    this.pageBean.data.map(vim=>{
+                        vim.createTime=this.format(vim.createTime)
+                    })
                 })
             },
+            add0(m){
+                return m<10?'0'+m:m
+            },
+                format(shijianchuo){
+                    //shijianchuo是整数，否则要parseInt转换
+                    var time = new Date(shijianchuo);
+                    var y = time.getFullYear();
+                    var m = time.getMonth()+1;
+                    var d = time.getDate();
+                    var h = time.getHours();
+                    var mm = time.getMinutes();
+                    var s = time.getSeconds();
+                    return y+'-'+this.add0(m)+'-'+this.add0(d)+' '+this.add0(h)+':'+this.add0(mm)+':'+this.add0(s);
+                },
         },
 
         //上来就先把数据放到界面里
