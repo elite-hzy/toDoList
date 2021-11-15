@@ -13,7 +13,7 @@
     <el-table
             :data="pageBean.data"
             border
-            style="width: 60%">
+            style="width: 50%">
         <el-table-column
                 fixed
                 prop="userName"
@@ -21,7 +21,7 @@
                 width="200">
         </el-table-column>
         <el-table-column
-                prop="id"
+                prop="cid"
                 label="编号"
                 width="120">
         </el-table-column>
@@ -41,7 +41,7 @@
                 width="100">
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                <el-button type="text" size="small">编辑</el-button>
+                <el-button type="text" size="small">编辑{{data| filter}}</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -54,7 +54,7 @@
         data: {
             tableData: {
                 userName: '',
-                id: '',
+                cid: '',
                 createTime: '',
                 context:'',
             },
@@ -72,24 +72,10 @@
                     this.pageBean = resp.data;
 
                     this.pageBean.data.map(vim=>{
-                        vim.createTime=this.format(vim.createTime)
+                        vim.createTime=1
                     })
                 })
             },
-            add0(m){
-                return m<10?'0'+m:m
-            },
-                format(shijianchuo){
-                    //shijianchuo是整数，否则要parseInt转换
-                    var time = new Date(shijianchuo);
-                    var y = time.getFullYear();
-                    var m = time.getMonth()+1;
-                    var d = time.getDate();
-                    var h = time.getHours();
-                    var mm = time.getMinutes();
-                    var s = time.getSeconds();
-                    return y+'-'+this.add0(m)+'-'+this.add0(d)+' '+this.add0(h)+':'+this.add0(mm)+':'+this.add0(s);
-                },
         },
 
         //上来就先把数据放到界面里

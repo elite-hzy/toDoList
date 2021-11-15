@@ -13,4 +13,6 @@ public interface ContextDao {
     @Select("select * from context")
     List<Context> findAll();
 
+    @Select("select * from context where id=#{id}")
+    List<Context>findContextById(Integer id);
 }

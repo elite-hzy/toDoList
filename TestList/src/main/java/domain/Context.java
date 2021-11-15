@@ -21,7 +21,7 @@ public class Context implements Serializable {
      */
     private String userName;
     //编号
-    private Integer cid;
+    private Integer id;
     //创建时间
     private Date createTime;
 

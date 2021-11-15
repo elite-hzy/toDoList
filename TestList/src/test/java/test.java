@@ -15,19 +15,15 @@ import java.util.List;
 @ContextConfiguration("classpath:applicationContext.xml")
 public class test {
 
-    @Autowired
-    private UserService userService;
+//    @Autowired(required = false)
+//    private UserService userService;
 
-    @Autowired
+    @Autowired(required = false)
     private ContextDao contextDao;
 
     @Test
     public  void insertTest(){
-//        User user = new User(null, "hzy", "123");
-//        System.out.println(user);
-//        ResultInfo login = userService.login(user);
-//        System.out.println(login);
-        List<Context> all = contextDao.findAll();
-        System.out.println(all);
+        List<Context> contextById = contextDao.findContextById(1);
+        System.out.println(contextById);
     }
 }
