@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
-    <script src="../js/vue.js"></script>
-    <script src="../element-ui/lib/index.js"></script>
-    <script src="../js/axios-0.19.0.js"></script>
+    <script src="/js/vue.js"></script>
+    <script src="/element-ui/lib/index.js"></script>
+    <script src="/js/axios-0.19.0.js"></script>
 </head>
 <body>
 <div id="app">
+    <el-row>
+        <el-col :span="21">
+            <el-page-header @back="exit" content="收货人地址管理" title="退出"/>
+        </el-col>
+        <el-col :span="3">
+            <el-button type="primary" plain size="small" icon="el-icon-document" @click="showDialog">添加收货地址</el-button>
+        </el-col>
+    </el-row>
+    <!--表格部分-->
+    <el-row>
+        <el-col :span="24">
     <el-table
             :data="pageBean.data"
             border
-            style="width: 50%">
+            style="width: 60%">
         <el-table-column
                 fixed
                 prop="userName"
@@ -21,7 +32,7 @@
                 width="200">
         </el-table-column>
         <el-table-column
-                prop="cid"
+                prop="id"
                 label="编号"
                 width="120">
         </el-table-column>
@@ -41,10 +52,38 @@
                 width="100">
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                <el-button type="text" size="small">编辑{{data| filter}}</el-button>
+                <el-button type="text" size="small">编辑</el-button>
             </template>
         </el-table-column>
     </el-table>
+        </el-col>
+    </el-row>
+
+    <!--
+   新增和修改对话框
+   close-on-click-modal:是否可以通过点击 modal 关闭 Dialog
+    -->
+    <el-dialog title="收货人信息" :visible.sync="dialogFormVisible" width="45%" @close="cancel" :close-on-click-modal="false">
+        <!-- status-icon 为输入框添加了表示校验结果的反馈图标-->
+        <el-form :model="form" :rules="rules" label-width="100px" size="small" ref="addressForm" status-icon>
+            <!-- prop属性用于表单验证 -->
+            <el-form-item label="联系人" prop="contact">
+                <el-input v-model="form.contact" autocomplete="off" placeholder="请输入姓名" prefix-icon="el-icon-user" style="width:90%"/>
+            </el-form-item>
+
+            <el-form-item label="联系地址" prop="address">
+                <el-input v-model="form.address" autocomplete="off" placeholder="请输入联系地址" prefix-icon="el-icon-location" style="width:90%"/>
+            </el-form-item>
+
+            <el-form-item label="电话" prop="telephone">
+                <el-input v-model="form.telephone" type="text" autocomplete="off" placeholder="请输入电话号码" prefix-icon="el-icon-phone" style="width:90%"/>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="cancel" icon="el-icon-ice-cream-round">取 消</el-button>
+            <el-button type="primary" @click="save" icon="el-icon-milk-tea">确 定</el-button>
+        </div>
+    </el-dialog>
 </div>
 </body>
 </html>
@@ -54,12 +93,35 @@
         data: {
             tableData: {
                 userName: '',
-                cid: '',
+                id: '',
                 createTime: '',
                 context:'',
             },
+            //表单
+            form: {
+                contact: '',
+                address: '',
+                telephone: ''
+            },
+            dialogFormVisible: false,  //对话框不可见
             //页面对象
             pageBean:{},
+            //校验规则
+            rules: {
+                //员工姓名
+                contact: [
+                    {required: true, message: '姓名不能为空', trigger: 'blur'},
+                    {pattern: "^[\u4E00-\u9FA5]{2,4}$", message: '请输入2到4个汉字', trigger: 'blur'}
+                ],
+                address: [
+                    {required: true, message: '联系地址必须输入', trigger: 'blur'},
+                    {min: 5, message: '联系地址必须大于5个字符', trigger: 'blur'}
+                ],
+                telephone: [
+                    {required: true, message: '电话号码不能为空', trigger: 'blur'},
+                    {pattern: "^1[35789]\\d{9}$", message: '电话号码格式不正确', trigger: 'blur'}
+                ]
+            }
         },
         methods: {
             handleClick(row) {
@@ -72,10 +134,47 @@
                     this.pageBean = resp.data;
 
                     this.pageBean.data.map(vim=>{
-                        vim.createTime=1
+                        vim.createTime=this.format(vim.createTime)
                     })
                 })
             },
+            add0(m){
+                return m<10?'0'+m:m
+            },
+                format(shijianchuo){
+                    //shijianchuo是整数，否则要parseInt转换
+                    var time = new Date(shijianchuo);
+                    var y = time.getFullYear();
+                    var m = time.getMonth()+1;
+                    var d = time.getDate();
+                    var h = time.getHours();
+                    var mm = time.getMinutes();
+                    var s = time.getSeconds();
+                    return y+'-'+this.add0(m)+'-'+this.add0(d)+' '+this.add0(h)+':'+this.add0(mm)+':'+this.add0(s);
+                },
+            //退出
+            exit() {
+                //调用服务器的退出方法
+                axios.get("/user/logout").then(resp=>{
+                    //resp除了能传数据,并且还会传状态码
+                    if(resp.status==200){
+                        //跳转到登录页面,这里的跳转与href区别是没法通过返回上一级回到原先函数
+                        location.replace("index.html");
+                    }
+                })
+            },
+            //显示对象框
+            showDialog() {
+                this.dialogFormVisible=true
+            },
+            //对话框的取消按钮
+            cancel() {
+                this.dialogFormVisible=false
+            },
+            //确定按钮
+            save(){
+
+            }
         },
 
         //上来就先把数据放到界面里

@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
-    <script src="js/vue.js"></script>
-    <script src="element-ui/lib/index.js"></script>
-    <script src="js/axios-0.19.0.js"></script>
+    <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+    <script src="../js/vue.js"></script>
+    <script src="../element-ui/lib/index.js"></script>
+    <script src="../js/axios-0.19.0.js"></script>
 </head>
 <body>
+<!--
+    11-16之前 从elementUI拷贝过来的代码
+-->
 <div id="app">
     <el-table
             :data="tableData"
@@ -16,7 +19,7 @@
             style="width: 50%">
         <el-table-column
                 fixed
-                prop="createTime"
+                prop="create_time"
                 label="创建时间"
                 width="200">
         </el-table-column>
@@ -47,27 +50,39 @@
     new Vue({
         el: "#app",
         data: {
-            tableData: {
-                cid: '',
-                context: '',
-                createTime: '',
-            },
+            tableData: [{
+                cid: '王小虎',
+                context: '普陀区',
+                create_time: '2021-11-9',
+            }, {
+                cid: '王小虎',
+                context: '普陀区',
+                create_time: '2021-11-9',
+            }, {
+                cid: '王小虎',
+                context: '普陀区',
+                create_time: '2021-11-9',
+            }, {
+                cid: '王小虎',
+                context: '普陀区',
+                create_time: '2021-11-9',
+            }, {
+                cid: '王小虎',
+                context: '普陀区',
+                create_time: '2021-11-9',
+            }
+            ]
+
+
         },
         methods: {
             handleClick(row) {
                 console.log(row);
-            },
-            //获取资源
-            getResource(){
-                axios.post("/context/push").then(resp=>{
-                    //获取到数据
-                    this.tableData = resp.data;
-                })
             }
         },
         //上来就先把数据放到界面里
         created(){
-            // this.getResource();
+
         }
     });
 </script>
