@@ -15,15 +15,12 @@ import java.util.List;
 @ContextConfiguration("classpath:applicationContext.xml")
 public class test {
 
-//    @Autowired(required = false)
-//    private UserService userService;
 
     @Autowired(required = false)
     private ContextDao contextDao;
 
     @Test
     public  void insertTest(){
-        List<Context> contextById = contextDao.findContextById(1);
-        System.out.println(contextById);
+        contextDao.save("hzy",1,"hsdas","2021-11-14 21:10:47");
     }
 }

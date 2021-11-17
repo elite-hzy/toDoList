@@ -11,4 +11,7 @@ public interface ContextService {
 
     //获取部分数据
     List<Context>findContextById();
+
+    //添加数据
+    void save();
 }

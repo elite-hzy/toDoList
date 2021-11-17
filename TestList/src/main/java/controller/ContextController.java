@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.ContextService;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -18,6 +20,8 @@ public class ContextController {
     @Autowired
     private ContextService contextService;
 
+    @Autowired
+    private HttpSession session;
 
     @RequestMapping("/push")
     public ResultInfo quick(){
@@ -30,6 +34,12 @@ public class ContextController {
     public ResultInfo findContextById(){
         List<Context> contextById = contextService.findContextById();
         return new ResultInfo(true,contextById);
+    }
+
+    @RequestMapping("/logout")
+    public void logout(){
+        //服务器状态销毁  使用会话域过期方法
+        session.invalidate();
     }
 
 

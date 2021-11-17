@@ -8,14 +8,21 @@
     <script src="/element-ui/lib/index.js"></script>
     <script src="/js/axios-0.19.0.js"></script>
 </head>
+<style>
+    body{
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+</style>
 <body>
 <div id="app">
     <el-row>
         <el-col :span="21">
-            <el-page-header @back="exit" content="收货人地址管理" title="退出"/>
+            <el-page-header @back="exit" content="界面显示" title="退出"/>
         </el-col>
         <el-col :span="3">
-            <el-button type="primary" plain size="small" icon="el-icon-document" @click="showDialog">添加收货地址</el-button>
+            <el-button type="primary" plain size="small" icon="el-icon-document" @click="showDialog">添加任务</el-button>
         </el-col>
     </el-row>
     <!--表格部分-->
@@ -24,7 +31,8 @@
     <el-table
             :data="pageBean.data"
             border
-            style="width: 60%">
+            max-height="95%" style="width: 100%"
+            >
         <el-table-column
                 fixed
                 prop="userName"
@@ -39,7 +47,7 @@
         <el-table-column
                 prop="createTime"
                 label="创建时间"
-                width="120">
+                width="240">
         </el-table-column>
         <el-table-column
                 prop="context"
@@ -47,7 +55,6 @@
                 width="120">
         </el-table-column>
         <el-table-column
-                fixed="right"
                 label="操作"
                 width="100">
             <template slot-scope="scope">
@@ -155,7 +162,7 @@
             //退出
             exit() {
                 //调用服务器的退出方法
-                axios.get("/user/logout").then(resp=>{
+                axios.get("/context/logout").then(resp=>{
                     //resp除了能传数据,并且还会传状态码
                     if(resp.status==200){
                         //跳转到登录页面,这里的跳转与href区别是没法通过返回上一级回到原先函数
