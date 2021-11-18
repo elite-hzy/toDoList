@@ -23,6 +23,7 @@ public class UserController {
     @RequestMapping("/login")
     public ResultInfo quick(@RequestBody User user){
         ResultInfo resultInfo = userService.login(user);
+
         return resultInfo;
     }
 }

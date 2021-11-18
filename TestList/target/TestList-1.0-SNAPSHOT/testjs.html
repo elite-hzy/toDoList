@@ -70,16 +70,16 @@
    新增和修改对话框
    close-on-click-modal:是否可以通过点击 modal 关闭 Dialog
     -->
-    <el-dialog title="收货人信息" :visible.sync="dialogFormVisible" width="45%" @close="cancel" :close-on-click-modal="false">
+    <el-dialog title="添加任务内容" :visible.sync="dialogFormVisible" width="45%" @close="cancel" :close-on-click-modal="false">
         <!-- status-icon 为输入框添加了表示校验结果的反馈图标-->
         <el-form :model="form" :rules="rules" label-width="100px" size="small" ref="addressForm" status-icon>
             <!-- prop属性用于表单验证 -->
             <el-form-item label="联系人" prop="contact">
-                <el-input v-model="form.contact" autocomplete="off" placeholder="请输入姓名" prefix-icon="el-icon-user" style="width:90%"/>
+                <el-input v-model="form.contact" autocomplete="off" placeholder="请输入内容" prefix-icon="el-icon-user" style="width:90%"/>
             </el-form-item>
 
             <el-form-item label="联系地址" prop="address">
-                <el-input v-model="form.address" autocomplete="off" placeholder="请输入联系地址" prefix-icon="el-icon-location" style="width:90%"/>
+                <el-input v-model="form.address" autocomplete="off" placeholder="请输入" prefix-icon="el-icon-location" style="width:90%"/>
             </el-form-item>
 
             <el-form-item label="电话" prop="telephone">
@@ -117,17 +117,17 @@
             rules: {
                 //员工姓名
                 contact: [
-                    {required: true, message: '姓名不能为空', trigger: 'blur'},
+                    {required: true, message: '内容不能为空', trigger: 'blur'},
                     {pattern: "^[\u4E00-\u9FA5]{2,4}$", message: '请输入2到4个汉字', trigger: 'blur'}
                 ],
-                address: [
-                    {required: true, message: '联系地址必须输入', trigger: 'blur'},
-                    {min: 5, message: '联系地址必须大于5个字符', trigger: 'blur'}
-                ],
-                telephone: [
-                    {required: true, message: '电话号码不能为空', trigger: 'blur'},
-                    {pattern: "^1[35789]\\d{9}$", message: '电话号码格式不正确', trigger: 'blur'}
-                ]
+                // address: [
+                //     {required: true, message: '联系地址必须输入', trigger: 'blur'},
+                //     {min: 5, message: '联系地址必须大于5个字符', trigger: 'blur'}
+                // ],
+                // telephone: [
+                //     {required: true, message: '电话号码不能为空', trigger: 'blur'},
+                //     {pattern: "^1[35789]\\d{9}$", message: '电话号码格式不正确', trigger: 'blur'}
+                // ]
             }
         },
         methods: {
@@ -172,14 +172,32 @@
             },
             //显示对象框
             showDialog() {
-                this.dialogFormVisible=true
+                this.dialogFormVisible=true;
+                //清空表单的数据
+                this.form={
+                    contact: '',
+                    address: '',
+                    telephone: ''
+                };
+                // //清空校验规则，将表单重置
+                // this.$refs['addressForm'].resetFields();
             },
             //对话框的取消按钮
             cancel() {
                 this.dialogFormVisible=false
             },
-            //确定按钮
+            //确定按钮(添加按钮)
             save(){
+                // 为表单绑定验证功能
+                this.$refs["addressForm"].validate((valid) => {
+                    if (valid) {
+                        axios.post("/context/testCreate",this.form).then(resp=>{
+                            alert("添加成功");
+                        })
+                    } else {
+                        return false;
+                    }
+                });
 
             }
         },

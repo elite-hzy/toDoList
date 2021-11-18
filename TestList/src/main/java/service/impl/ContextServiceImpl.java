@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ContextServiceImpl implements ContextService {
@@ -38,8 +39,12 @@ public class ContextServiceImpl implements ContextService {
     }
 
     @Override
-    public void save() {
-        contextDao.save("dao",1,"hsdas","2021-11-14 21:10:47");
+    public void save(Map<String,Object> paramMap) {
+//        contextDao.save();
+        Integer id = (Integer) paramMap.get("id");
+        String createTime = (String) paramMap.get("createTime");
+        String contact = (String) paramMap.get("contact");
+        contextDao.save("test",id,contact,createTime);
     }
 
 

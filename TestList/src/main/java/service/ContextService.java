@@ -3,6 +3,7 @@ package service;
 import domain.Context;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ContextService {
 
@@ -13,5 +14,5 @@ public interface ContextService {
     List<Context>findContextById();
 
     //添加数据
-    void save();
+    void save(Map<String,Object> paramMap);
 }

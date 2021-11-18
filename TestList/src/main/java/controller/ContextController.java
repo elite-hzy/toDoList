@@ -11,7 +11,11 @@ import service.ContextService;
 
 import javax.mail.Session;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/context",produces = "application/json;charset=utf-8")
@@ -41,6 +45,22 @@ public class ContextController {
         //服务器状态销毁  使用会话域过期方法
         session.invalidate();
     }
+    //前端后端传值失败
+//    @RequestMapping("/testCreate")
+//    public void push(HttpSession session, @RequestBody Map<String,Object>paramMap){
+//        User user = (User) session.getAttribute("user");
+//        Integer id = user.getId();
+//        Date date = new Date();
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String time = format.format(date);
+//        String contact = (String) paramMap.get("contact");
+//        Map<String, Object> stringMap = new HashMap<>();
+//        stringMap.put("id",id);
+//        stringMap.put("createTime",time);
+//        stringMap.put("contact",contact);
+//
+//        contextService.save(stringMap);
+//    }
 
 
 }
