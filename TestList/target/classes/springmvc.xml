@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--    扫描controller-->
+    <context:component-scan base-package="controller"/>
+
+    <!--    视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+    </bean>
+
+    <!--3. 开启注解驱动-->
+    <mvc:annotation-driven/>
+
+    <!--4. 释放资源资源-->
+    <mvc:default-servlet-handler/>
+
+    <!-- 配置用户权限的拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/pages/**"/>
+            <!-- 操作address的处理器 -->
+            <mvc:mapping path="/address/**"/>
+            <bean class="interceptor.UserLoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

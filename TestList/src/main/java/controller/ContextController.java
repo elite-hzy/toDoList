@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Context;
+import domain.NoDateContext;
 import domain.ResultInfo;
 import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,19 +47,37 @@ public class ContextController {
         session.invalidate();
     }
     //前端后端传值失败
+    @RequestMapping("/testCreate")
+    public void push(HttpSession session, @RequestBody Map<String,Object>paramMap){
+        //如果没有传500
+        User user = (User) session.getAttribute("user");
+        Integer id = user.getId();
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = format.format(date);
+        String contact = (String) paramMap.get("contact");
+        Map<String, Object> stringMap = new HashMap<>();
+        stringMap.put("id",id);
+        stringMap.put("createTime",time);
+        stringMap.put("contact",contact);
+
+        contextService.save(stringMap);
+    }
+    //前端后端传值失败
 //    @RequestMapping("/testCreate")
-//    public void push(HttpSession session, @RequestBody Map<String,Object>paramMap){
+//    public void push(@RequestBody NoDateContext context){
 //        User user = (User) session.getAttribute("user");
 //        Integer id = user.getId();
 //        Date date = new Date();
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String time = format.format(date);
-//        String contact = (String) paramMap.get("contact");
+////        String contact = (String) paramMap.get("contact");
+//        String contact = context.getContext();
 //        Map<String, Object> stringMap = new HashMap<>();
 //        stringMap.put("id",id);
 //        stringMap.put("createTime",time);
 //        stringMap.put("contact",contact);
-//
+//        System.out.println("要传入的值"+stringMap);
 //        contextService.save(stringMap);
 //    }
 

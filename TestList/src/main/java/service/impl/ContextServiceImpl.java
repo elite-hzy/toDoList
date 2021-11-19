@@ -40,6 +40,7 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public void save(Map<String,Object> paramMap) {
+        System.out.println(paramMap);
 //        contextDao.save();
         Integer id = (Integer) paramMap.get("id");
         String createTime = (String) paramMap.get("createTime");

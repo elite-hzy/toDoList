@@ -1,3 +1,4 @@
+import controller.ContextController;
 import dao.ContextDao;
 import domain.Context;
 import domain.ResultInfo;
@@ -18,6 +19,7 @@ public class test {
 
     @Autowired(required = false)
     private ContextDao contextDao;
+
 
     @Test
     public  void insertTest(){
