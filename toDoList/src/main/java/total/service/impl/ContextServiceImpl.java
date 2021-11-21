@@ -27,13 +27,12 @@ public class ContextServiceImpl implements ContextService {
     }
 
     @Override
-    public List<Context> findContextById() {
+    public List<Context> findContextById(Integer id) {
 //        //首先先从session里获取数据
 //        User user = (User) session.getAttribute("user");
 //        Integer id = user.getId();
 //        //用id来获取用户的内容
-//        return contextDao.findContextById(id);
-        return null;
+        return contextDao.findContextById(id);
     }
 
     @Override

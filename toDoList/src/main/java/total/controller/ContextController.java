@@ -34,9 +34,12 @@ public class ContextController {
         return new ResultInfo(true,contextList);
     }
 
+    //正式代码,展示那些指定的数据
     @RequestMapping("test")
     public ResultInfo findContextById(){
-        List<Context> contextById = contextService.findContextById();
+        User user = (User) session.getAttribute("user");
+        Integer id = user.getId();
+        List<Context> contextById = contextService.findContextById(id);
         return new ResultInfo(true,contextById);
     }
 
@@ -65,23 +68,7 @@ public class ContextController {
 //        context.setCreateTime(Timestamp.valueOf("2021-11-20 16:38:02"));
         contextService.save(stringMap);
     }
-    //前端后端传值失败
-//    @RequestMapping("/testCreate")
-//    public void push(@RequestBody NoDateContext context){
-//        User user = (User) session.getAttribute("user");
-//        Integer id = user.getId();
-//        Date date = new Date();
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String time = format.format(date);
-////        String contact = (String) paramMap.get("contact");
-//        String contact = context.getContext();
-//        Map<String, Object> stringMap = new HashMap<>();
-//        stringMap.put("id",id);
-//        stringMap.put("createTime",time);
-//        stringMap.put("contact",contact);
-//        System.out.println("要传入的值"+stringMap);
-//        contextService.save(stringMap);
-//    }
+
 
 
 }

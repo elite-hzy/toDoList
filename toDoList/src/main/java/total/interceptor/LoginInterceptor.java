@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (user == null) {
             System.out.println("拦截非法用户:" + request.getRequestURL());
             //这里是异步,没法用重定向
-//            response.sendRedirect(request.getContextPath() + "/log_on.html");
+//            response.sendRedirect(request.getContextPath() + "/index.html");
             response.setContentType("application/json;charset=utf-8");
             PrintWriter out = response.getWriter();
             ResultInfo resultInfo = new ResultInfo(false,"您没有登录账号");

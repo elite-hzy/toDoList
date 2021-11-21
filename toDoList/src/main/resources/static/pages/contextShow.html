@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="element-ui/lib/theme-chalk/index.css">
-    <script src="js/vue.js"></script>
-    <script src="element-ui/lib/index.js"></script>
-    <script src="js/axios-0.19.0.js"></script>
+    <link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+    <script src="../js/vue.js"></script>
+    <script src="../element-ui/lib/index.js"></script>
+    <script src="../js/axios-0.19.0.js"></script>
 </head>
 <style>
     body{
@@ -136,12 +136,13 @@
             },
             //获取资源
             getResource(){
-                axios.post("/context/push").then(resp=>{
+                //全部显示就用/context/push,显示特定用户就用test
+                axios.post("/context/test").then(resp=>{
                     //获取到数据
                     this.pageBean = resp.data;
                     if (this.pageBean.message=="您没有登录账号"){
                         console.log("拦截器成功拦截");
-                        location.href="/log_on.html";
+                        location.href="../index.html";
 
                     }
                     this.pageBean.data.map(vim=>{
@@ -170,7 +171,7 @@
                     //resp除了能传数据,并且还会传状态码
                     if(resp.status==200){
                         //跳转到登录页面,这里的跳转与href区别是没法通过返回上一级回到原先函数
-                        location.replace("index.html");
+                        location.replace("../index.html");
                     }
                 })
             },

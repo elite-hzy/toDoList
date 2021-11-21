@@ -12,7 +12,7 @@ public interface ContextService {
     List<Context> findAll();
 
     //获取部分数据
-    List<Context>findContextById();
+    List<Context>findContextById(Integer id);
 
     //添加数据
     void save(Map<String,Object> paramMap);

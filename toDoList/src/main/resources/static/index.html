@@ -48,7 +48,7 @@
             msg:"",
             rules: {
                 name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
+                    { required: true, message: '请输入账号', trigger: 'blur' },
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -67,7 +67,7 @@
                     //先得到resultInfo
                     let ResultInfo =resp.data;
                     if(ResultInfo.success){
-                        location.href = "/testjs.html";
+                        location.href = "/pages/contextShow.html";
                     }else {
                         this.msg=ResultInfo.message;
                     }
