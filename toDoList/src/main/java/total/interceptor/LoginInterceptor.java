@@ -20,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         //判断会话域中有没有用户对象
         User user = (User) session.getAttribute("user");
-        System.out.println("session接收到的数据："+user);
+//        System.out.println("session接收到的数据："+user);
         //判断如果为空就没有登录
         if (user == null) {
             System.out.println("拦截非法用户:" + request.getRequestURL());

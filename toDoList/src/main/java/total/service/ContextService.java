@@ -1,6 +1,7 @@
 package total.service;
 
 
+import org.apache.ibatis.annotations.Param;
 import total.entity.Context;
 
 import java.util.List;
@@ -16,4 +17,11 @@ public interface ContextService {
 
     //添加数据
     void save(Map<String,Object> paramMap);
+
+
+    //先显示要被修改的内容
+    List<Context> showContextEditByID(Integer contextID);
+
+    //修改内容
+    void updateContext(String context,Integer contextID );
 }

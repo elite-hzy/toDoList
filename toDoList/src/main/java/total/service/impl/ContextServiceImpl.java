@@ -45,5 +45,17 @@ public class ContextServiceImpl implements ContextService {
         contextDao.save("test",id,contact,createTime);
     }
 
+    @Override
+    public List<Context> showContextEditByID(Integer contextID) {
+        List<Context> contexts = contextDao.showContextEditByID(contextID);
+        return contexts;
+    }
+
+    @Override
+    public void updateContext(String context, Integer contextID) {
+
+        contextDao.updateContext(context,contextID);
+    }
+
 
 }

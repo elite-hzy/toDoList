@@ -69,6 +69,26 @@ public class ContextController {
         contextService.save(stringMap);
     }
 
+    //返回显示的内容
+    @RequestMapping("/EditContextShow")
+    public ResultInfo EditContextShow(@RequestBody Map<String,Object>paramMap){
+        Integer contextID = (Integer) paramMap.get("contextID");
+        List<Context> contexts = contextService.showContextEditByID(contextID);
+        System.out.println("根据指定ID而搜索到的数据:"+contexts);
+        return new ResultInfo(true,contexts);
+//        System.out.println(contextID);
+//        return new ResultInfo(true);
+    }
 
+    //修改内容
+    @RequestMapping("/EditUpdate")
+    public ResultInfo EditUpdate(@RequestBody Map<String,Object>paramMap){
+        //先获取到2个元素
+        String context = (String) paramMap.get("context");
+        Integer contextID = (Integer) paramMap.get("contextID");
+
+        contextService.updateContext(context,contextID);
+        return new ResultInfo(true,"修改成功");
+    }
 
 }

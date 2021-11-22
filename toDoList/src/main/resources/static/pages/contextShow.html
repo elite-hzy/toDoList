@@ -60,13 +60,36 @@
 <!--            这里的handleClick(scope.row) 是会返回传进来参数-->
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                <el-button type="text" size="small">编辑</el-button>
+                <el-button type="text" size="small" @click="showEdit(scope.row)">编辑</el-button>
             </template>
         </el-table-column>
     </el-table>
         </el-col>
     </el-row>
-
+<!--    这里作为显示编辑的内容-->
+    <!--
+    dialogEditVisible
+    cancelEdit
+    :model=editForm
+    form.context
+    @click="cancel"
+    cancelEdit
+    saveEdit
+    -->
+    <el-dialog title="编辑内容" :visible.sync="dialogEditVisible" width="45%" @close="cancelEdit" :close-on-click-modal="false">
+        <!-- status-icon 为输入框添加了表示校验结果的反馈图标-->
+        <el-form :model="form" :rules="rules" label-width="100px" size="small" ref="addressForm" status-icon>
+            <!-- prop属性用于表单验证 -->
+            <el-form-item label="添加的内容" prop="context">
+                <el-input v-model="form.context" autocomplete="off" placeholder="请输入内容" prefix-icon="el-icon-user" style="width:90%"/>
+            </el-form-item>
+            <!--            以后这里还要再添加其他的-->
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="cancelEdit" icon="el-icon-ice-cream-round">取 消</el-button>
+            <el-button type="primary" @click="saveEdit" icon="el-icon-milk-tea">确 定</el-button>
+        </div>
+    </el-dialog>
     <!--
    新增和修改对话框
    close-on-click-modal:是否可以通过点击 modal 关闭 Dialog
@@ -104,9 +127,16 @@
                 address: '',
                 telephone: ''
             },
+            editShow:{
+                contextID:'',
+
+            },
             dialogFormVisible: false,  //对话框不可见
+            dialogEditVisible:false,//这里是编辑内容的不可见
             //页面对象
             pageBean:{},
+            //显示编辑的对象
+            pageBeanEdit:{},
             //校验规则
             rules: {
                 //员工姓名
@@ -127,6 +157,7 @@
         methods: {
             handleClick(row) {
                 console.log(row);
+                // console.log(row.contextID);
             },
             //获取资源
             getResource(){
@@ -183,7 +214,11 @@
             },
             //对话框的取消按钮
             cancel() {
-                this.dialogFormVisible=false
+                this.dialogFormVisible=false;
+            },
+            //编辑框的取消按钮
+            cancelEdit(){
+                this.dialogEditVisible=false;
             },
             //确定按钮(添加按钮)
             save(){
@@ -199,7 +234,23 @@
                     }
                 });
 
+            },
+            //显示编辑页面的内容
+            showEdit(row){
+                this.dialogEditVisible=true;
+                this.editShow.contextID=row.contextID;
+                // console.log(this.editShow.contextID);
+                axios.post("/context/EditContextShow",this.editShow).then(resp=>{
+                    this.pageBeanEdit =resp.data;
+                })
+            },
+            cancelEdit(){
+                this.dialogEditVisible=false;
+            },
+            saveEdit(){
+
             }
+
         },
 
         //上来就先把数据放到界面里
