@@ -78,10 +78,10 @@
     -->
     <el-dialog title="编辑内容" :visible.sync="dialogEditVisible" width="45%" @close="cancelEdit" :close-on-click-modal="false">
         <!-- status-icon 为输入框添加了表示校验结果的反馈图标-->
-        <el-form :model="form" :rules="rules" label-width="100px" size="small" ref="addressForm" status-icon>
+        <el-form :model="pageBeanEdit" :rules="rules" label-width="100px" size="small" ref="addressForm" status-icon>
             <!-- prop属性用于表单验证 -->
-            <el-form-item label="添加的内容" prop="context">
-                <el-input v-model="form.context" autocomplete="off" placeholder="请输入内容" prefix-icon="el-icon-user" style="width:90%"/>
+            <el-form-item label="编辑的内容" prop="context">
+                <el-input v-model="pageBeanEdit.context" autocomplete="off"  placeholder="请输入内容" prefix-icon="el-icon-user" style="width:90%"/>
             </el-form-item>
             <!--            以后这里还要再添加其他的-->
         </el-form>
@@ -136,7 +136,12 @@
             //页面对象
             pageBean:{},
             //显示编辑的对象
-            pageBeanEdit:{},
+            pageBeanEdit:{
+                context:'',
+                contextID:'',
+            },
+            //作为检测有没有校验成功的,例如传递
+            postStatus:'',
             //校验规则
             rules: {
                 //员工姓名
@@ -242,13 +247,22 @@
                 // console.log(this.editShow.contextID);
                 axios.post("/context/EditContextShow",this.editShow).then(resp=>{
                     this.pageBeanEdit =resp.data;
+                    //因为获取到的值是一列数组,这里的
+                    this.pageBeanEdit.context=this.pageBeanEdit.data[0].context;
+                    this.pageBeanEdit.contextID=this.pageBeanEdit.data[0].contextID;
                 })
             },
             cancelEdit(){
                 this.dialogEditVisible=false;
             },
+            //修改数据发送给前端
             saveEdit(){
-
+                axios.post("/context/EditUpdate",this.pageBeanEdit).then(resp=>{
+                    this.postStatus =resp.data;
+                    if(this.postStatus.success==true){
+                        this.$message.success('修改成功');
+                    }
+                })
             }
 
         },
