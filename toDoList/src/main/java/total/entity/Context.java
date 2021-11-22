@@ -29,4 +29,6 @@ public class Context implements Serializable {
 
     // 0为未完成,1为完成,-1为失败(需要写个枚举类)
     private Integer situation;
+
+    private Integer contextID;
 }

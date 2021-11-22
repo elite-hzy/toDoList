@@ -9,11 +9,11 @@
     <script src="../js/axios-0.19.0.js"></script>
 </head>
 <style>
-    body{
-        padding: 0;
-        margin: 0;
-        border: 0;
-    }
+    /*body{*/
+    /*    padding: 0;*/
+    /*    margin: 0;*/
+    /*    border: 0;*/
+    /*}*/
 </style>
 <body>
 <div id="app">
@@ -57,6 +57,7 @@
         <el-table-column
                 label="操作"
                 width="100">
+<!--            这里的handleClick(scope.row) 是会返回传进来参数-->
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 <el-button type="text" size="small">编辑</el-button>
@@ -74,17 +75,10 @@
         <!-- status-icon 为输入框添加了表示校验结果的反馈图标-->
         <el-form :model="form" :rules="rules" label-width="100px" size="small" ref="addressForm" status-icon>
             <!-- prop属性用于表单验证 -->
-            <el-form-item label="联系人" prop="context">
+            <el-form-item label="添加的内容" prop="context">
                 <el-input v-model="form.context" autocomplete="off" placeholder="请输入内容" prefix-icon="el-icon-user" style="width:90%"/>
             </el-form-item>
-
-            <el-form-item label="联系地址" prop="address">
-                <el-input v-model="form.address" autocomplete="off" placeholder="请输入" prefix-icon="el-icon-location" style="width:90%"/>
-            </el-form-item>
-
-            <el-form-item label="电话" prop="telephone">
-                <el-input v-model="form.telephone" type="text" autocomplete="off" placeholder="请输入电话号码" prefix-icon="el-icon-phone" style="width:90%"/>
-            </el-form-item>
+<!--            以后这里还要再添加其他的-->
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click="cancel" icon="el-icon-ice-cream-round">取 消</el-button>
@@ -118,7 +112,7 @@
                 //员工姓名
                 context: [
                     {required: true, message: '内容不能为空', trigger: 'blur'},
-                    {pattern: "^[\u4E00-\u9FA5]{2,4}$", message: '请输入2到4个汉字', trigger: 'blur'}
+                    {min:1, message: '请输入内容', trigger: 'blur'}
                 ],
                 // address: [
                 //     {required: true, message: '联系地址必须输入', trigger: 'blur'},
