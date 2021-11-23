@@ -69,15 +69,43 @@ public class ContextController {
         contextService.save(stringMap);
     }
 
-    //返回显示的内容
+//    //返回显示的内容
+//    @RequestMapping("/EditContextShow")
+//    public ResultInfo EditContextShow(@RequestBody Map<String,Object>paramMap){
+//        Integer contextID = (Integer) paramMap.get("contextID");
+//        List<Context> contexts = contextService.showContextEditByID(contextID);
+////        根据指定ID而搜索到的数据:[Context(userName=hzy, id=1, createTime=Sat Oct 30 00:03:28 CST 2021, context=修改内容, situation=1, contextID=1)]
+//        System.out.println("根据指定ID而搜索到的数据:"+contexts);
+////        //增强for也只是获取到每一个for
+////        for (Context context : contexts) {
+////            System.out.println(context);
+////        }
+//        //这里获取到的是按照顺序的context,可以用强转
+//        Context context = contexts.get(0);
+//        String userName = context.getUserName();
+//        System.out.println(userName);
+//        return new ResultInfo(true,contexts);
+////        return new ResultInfo(true);
+//    }
+
+//    //返回显示的内容
     @RequestMapping("/EditContextShow")
-    public ResultInfo EditContextShow(@RequestBody Map<String,Object>paramMap){
+    public Context EditContextShow(@RequestBody Map<String,Object>paramMap){
         Integer contextID = (Integer) paramMap.get("contextID");
         List<Context> contexts = contextService.showContextEditByID(contextID);
+//        根据指定ID而搜索到的数据:[Context(userName=hzy, id=1, createTime=Sat Oct 30 00:03:28 CST 2021, context=修改内容, situation=1, contextID=1)]
         System.out.println("根据指定ID而搜索到的数据:"+contexts);
-        return new ResultInfo(true,contexts);
-//        System.out.println(contextID);
+
+        //这里获取到的是按照顺序的context,可以用强转
+        Context context = contexts.get(0);
+        Date time = context.getCreateTime();
+        long time1 = time.getTime();
+        System.out.println("time获取的毫秒 = " + time1);
+        System.out.println("现在生成的时间");
+//        return new ResultInfo(true,co
+//        ntexts);
 //        return new ResultInfo(true);
+        return context;
     }
 
     //修改内容
@@ -90,5 +118,7 @@ public class ContextController {
         contextService.updateContext(context,contextID);
         return new ResultInfo(true,"修改成功");
     }
+
+
 
 }
