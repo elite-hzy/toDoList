@@ -35,32 +35,34 @@
             >
         <el-table-column
                 fixed
-                prop="userName"
-                label="创建时间"
-                width="200">
+                label="用户名">
+            <template slot-scope="scope">
+  <span :style="{textDecoration:scope.row.situation==2?'line-through':''}">{{scope.row.userName}}</span>
+<!--           <span>{{scope.row.userName}}</span>-->
+<!--                <span :style="{'text-decoration':scope.row.situation==1?'line-through':''}">{{scope.row.userName}}</span>-->
+            </template>
+
         </el-table-column>
         <el-table-column
                 prop="id"
-                label="编号"
-                width="120">
+                label="编号">
         </el-table-column>
         <el-table-column
                 prop="createTime"
-                label="创建时间"
-                width="240">
+                label="创建时间">
         </el-table-column>
         <el-table-column
                 prop="context"
-                label="文本内容"
-                width="120">
+                label="文本内容">
         </el-table-column>
         <el-table-column
-                label="操作"
-                width="100">
+                label="操作">
 <!--            这里的handleClick(scope.row) 是会返回传进来参数-->
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 <el-button type="text" size="small" @click="showEdit(scope.row)">编辑</el-button>
+                <el-button type="text" size="small" @click="deleteContext(scope.row)">删除</el-button>
+                <el-button type="text" size="small" @click="editSituation(scope.row)">更改完成情况</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -130,7 +132,6 @@
             },
             editShow:{
                 contextID:'',
-
             },
             dialogFormVisible: false,  //对话框不可见
             dialogEditVisible:false,//这里是编辑内容的不可见
@@ -141,6 +142,11 @@
                 context:'',
                 contextID:'',
             },
+            //更改状态的函数,完成情况
+            pageBeanSituation:{
+                contextID:'',
+                situation:'',
+            },
             //作为检测有没有校验成功的,例如传递
             postStatus:'',
             //校验规则
@@ -150,14 +156,6 @@
                     {required: true, message: '内容不能为空', trigger: 'blur'},
                     {min:1, message: '请输入内容', trigger: 'blur'}
                 ],
-                // address: [
-                //     {required: true, message: '联系地址必须输入', trigger: 'blur'},
-                //     {min: 5, message: '联系地址必须大于5个字符', trigger: 'blur'}
-                // ],
-                // telephone: [
-                //     {required: true, message: '电话号码不能为空', trigger: 'blur'},
-                //     {pattern: "^1[35789]\\d{9}$", message: '电话号码格式不正确', trigger: 'blur'}
-                // ]
             }
         },
         methods: {
@@ -233,7 +231,16 @@
                     if (valid) {
                         console.log("添加页面");
                         axios.post("/context/testCreate",this.form).then(resp=>{
-                            alert("添加成功");
+                            this.$message.success('添加成功,3s后刷新');
+                            //3s后跳转
+                            let num=3;
+                            setInterval(()=>{
+                                num--;
+                                if(num==0){
+                                    //跳转到登录页面
+                                    location.href="/pages/contextShow.html";
+                                }
+                            },1000)
                         })
                     } else {
                         return false;
@@ -241,7 +248,7 @@
                 });
 
             },
-            // //显示编辑页面的内容
+            // //显示编辑页面的内容 这里是用 更详细的方法来获取
             // showEdit(row){
             //     this.dialogEditVisible=true;
             //     this.editShow.contextID=row.contextID;
@@ -273,11 +280,64 @@
                 axios.post("/context/EditUpdate",this.pageBeanEdit).then(resp=>{
                     this.postStatus =resp.data;
                     if(this.postStatus.success==true){
-                        this.$message.success('修改成功');
+                        this.$message.success('修改成功,3s后刷新');
+                        //3s后跳转
+                        let num=3;
+                        setInterval(()=>{
+                            num--;
+                            if(num==0){
+                                //跳转到登录页面
+                                location.href="/pages/contextShow.html";
+                            }
+                        },1000)
+                    }
+                })
+            },
+            //修改任务情况,
+            editSituation(row){
+                this.pageBeanSituation.situation=row.situation;
+                this.pageBeanSituation.contextID=row.contextID;
+                axios.post("/context/EditSituation",this.pageBeanSituation).then(resp=>{
+                    let ResultInfo = resp.data;
+                    if(ResultInfo.success==true){
+                        this.$message.success('修改成功,3s后刷新');
+                        //3s后跳转
+                        let num=3;
+                        setInterval(()=>{
+                            num--;
+                            if(num==0){
+                                //跳转到登录页面
+                                location.href="/pages/contextShow.html";
+                            }
+                        },1000)
+                    }else{
+                        this.$message.success('修改失败');
+
+                    }
+                })
+            },
+            //删除
+            deleteContext(row){
+                this.pageBeanSituation.contextID=row.contextID;
+                axios.post("/context/deleteContext",this.pageBeanSituation).then(resp=>{
+                    let ResultInfo = resp.data;
+                    if(ResultInfo.success==true){
+                        this.$message.success('删除成功,3s后刷新');
+                        //3s后跳转
+                        let num=3;
+                        setInterval(()=>{
+                            num--;
+                            if(num==0){
+                                //跳转到登录页面
+                                location.href="/pages/contextShow.html";
+                            }
+                        },1000)
+                    }else{
+                        this.$message.success('删除失败');
+
                     }
                 })
             }
-
         },
 
         //上来就先把数据放到界面里

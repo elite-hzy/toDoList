@@ -24,4 +24,10 @@ public interface ContextService {
 
     //修改内容
     void updateContext(String context,Integer contextID );
+
+    //修改状态情况
+    void updateSituation(Integer situation,Integer contextID);
+
+    //删除数据
+    void deleteTheContext(Integer contextID );
 }

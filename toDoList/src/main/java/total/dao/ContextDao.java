@@ -1,10 +1,7 @@
 package total.dao;
 
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import total.entity.Context;
 
 import java.util.List;
@@ -20,7 +17,7 @@ public interface ContextDao {
     List<Context>findContextById(Integer id);
 
     //添加内容
-    @Insert("insert into context (userName, id, context,createTime) values(#{userName},#{id},#{context},#{createTime})")
+    @Insert("insert into context (userName, id, context,createTime,situation) values(#{userName},#{id},#{context},#{createTime},1)")
     void save(@Param("userName") String userName, @Param("id")Integer id, @Param("context") String context,@Param("createTime") String createTime);
 
     //先显示要被修改的内容
@@ -30,4 +27,12 @@ public interface ContextDao {
     //修改内容
     @Update("update context set context=#{context} where contextID = #{contextID}")
     int updateContext(@Param("context") String context,@Param("contextID")Integer contextID );
+
+    //修改状态情况
+    @Update("update context set situation=2 where contextID = #{contextID}")
+    int updateSituation(@Param("situation") Integer situation,@Param("contextID")Integer contextID );
+
+    //删除数据
+    @Delete("delete from context where contextID = #{contextID}")
+    void deleteTheContext(@Param("contextID")Integer contextID );
 }

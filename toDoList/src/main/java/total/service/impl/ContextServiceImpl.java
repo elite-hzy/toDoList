@@ -53,8 +53,19 @@ public class ContextServiceImpl implements ContextService {
 
     @Override
     public void updateContext(String context, Integer contextID) {
-
         contextDao.updateContext(context,contextID);
+    }
+
+    //修改状态的ID
+    @Override
+    public void updateSituation(Integer situation, Integer contextID) {
+        contextDao.updateSituation(situation,contextID);
+
+    }
+    //删除数据
+    @Override
+    public void deleteTheContext(Integer contextID) {
+        contextDao.deleteTheContext(contextID);
     }
 
 

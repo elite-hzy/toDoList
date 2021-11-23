@@ -49,7 +49,7 @@ public class ContextController {
         session.invalidate();
     }
 
-    //前端后端传值失败
+    //新建内容
     //byUser已经存进了id,等会添加内容的时候直接从这里获取就行
     @RequestMapping("/testCreate")
     public void push(HttpSession session, @RequestBody Map<String,Object>paramMap){
@@ -94,14 +94,12 @@ public class ContextController {
         Integer contextID = (Integer) paramMap.get("contextID");
         List<Context> contexts = contextService.showContextEditByID(contextID);
 //        根据指定ID而搜索到的数据:[Context(userName=hzy, id=1, createTime=Sat Oct 30 00:03:28 CST 2021, context=修改内容, situation=1, contextID=1)]
-        System.out.println("根据指定ID而搜索到的数据:"+contexts);
-
+//        System.out.println("根据指定ID而搜索到的数据:"+contexts);
         //这里获取到的是按照顺序的context,可以用强转
         Context context = contexts.get(0);
         Date time = context.getCreateTime();
         long time1 = time.getTime();
-        System.out.println("time获取的毫秒 = " + time1);
-        System.out.println("现在生成的时间");
+//        System.out.println("time获取的毫秒 = " + time1);//= 1637637999000
 //        return new ResultInfo(true,co
 //        ntexts);
 //        return new ResultInfo(true);
@@ -119,6 +117,24 @@ public class ContextController {
         return new ResultInfo(true,"修改成功");
     }
 
+    //修改状态的ID
+    @RequestMapping("/EditSituation")
+    public ResultInfo EditSituation(@RequestBody Map<String,Object>paramMap){
+        //先获取到2个元素
+        Integer contextID = (Integer) paramMap.get("contextID");
+        Integer situation = (Integer) paramMap.get("situation");
+        if(situation!=1){
+            return new ResultInfo(false,"只有未完成才能修改");
+        }
+        contextService.updateSituation(situation,contextID);
+        return new ResultInfo(true,"修改成功");
+    }
 
-
+    @RequestMapping("/deleteContext")
+    public ResultInfo deleteContext(@RequestBody Map<String,Object>paramMap){
+        //先获取到id
+        Integer contextID = (Integer) paramMap.get("contextID");
+        contextService.deleteTheContext(contextID);
+        return new ResultInfo(true,"删除成功");
+    }
 }
