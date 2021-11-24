@@ -16,7 +16,7 @@ public class User {
     @TableId(type = IdType.AUTO)//@TableId(type=IdType.AUTO)表示主键是自增的
     private Integer id;
 
-    private String user_name;
+    private String userName;
 
     private String password;
 }

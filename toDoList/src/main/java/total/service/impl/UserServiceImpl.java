@@ -15,11 +15,12 @@ public class UserServiceImpl implements UserService {
     //登录界面
     @Override
     public ResultInfo login(User user) {
-        System.out.println("获取到的数据"+user);
+//        System.out.println("获取到的数据"+user);
         //先获取到用户名和密码
-        String userName = user.getUser_name();
+        String userName = user.getUserName();
         String password = user.getPassword();
         User byUser = userDao.findByUser(userName, password);
+//        System.out.println("业务层里查询到的用户信息"+byUser);
         if (byUser == null) {
             return new ResultInfo(false,"用户名或密码错误");
         }

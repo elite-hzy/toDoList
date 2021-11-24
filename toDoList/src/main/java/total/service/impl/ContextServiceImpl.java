@@ -18,8 +18,8 @@ public class ContextServiceImpl implements ContextService {
     @Autowired(required = false)
     private ContextDao contextDao;
 
-    @Autowired
-    private HttpSession session;
+//    @Autowired
+//    private HttpSession session;
 
     @Override
     public List<Context> findAll() {

@@ -11,8 +11,8 @@ public interface UserDao extends BaseMapper<User> {
     //这里是校验 用户名和密码正不正确
     //select * from table_user where user_name='hzy' and password='123
     //校验用户名存不存在
-    @Select("select * from table_user where user_name=#{username} and password=#{password}")
-    public User findByUser(String username,String password);
+    @Select("select * from table_user where userName=#{userName} and password=#{password}")
+    public User findByUser(String userName,String password);
 
 
 }

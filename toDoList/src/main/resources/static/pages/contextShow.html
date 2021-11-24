@@ -25,6 +25,7 @@
             <el-button type="primary" plain size="small" icon="el-icon-document" @click="showDialog">添加任务</el-button>
         </el-col>
     </el-row>
+            <el-link disabled>{{user_name}}大佬您好!</el-link>
     <!--表格部分-->
     <el-row>
         <el-col :span="24">
@@ -156,9 +157,12 @@
                     {required: true, message: '内容不能为空', trigger: 'blur'},
                     {min:1, message: '请输入内容', trigger: 'blur'}
                 ],
-            }
+            },
+            //放到用户界面上的
+            user_name:'',
         },
         methods: {
+            //查看内容
             handleClick(row) {
                 console.log(row);
                 // console.log(row.contextID);
@@ -179,9 +183,11 @@
                     })
                 })
             },
+            //毫秒转时间的其中一个小方法
             add0(m){
                 return m<10?'0'+m:m
             },
+            //毫秒转时间
                 format(shijianchuo){
                     //shijianchuo是整数，否则要parseInt转换
                     var time = new Date(shijianchuo);
@@ -272,9 +278,9 @@
                     this.pageBeanEdit =resp.data;
                 })
             },
-            cancelEdit(){
-                this.dialogEditVisible=false;
-            },
+            // cancelEdit(){
+            //     this.dialogEditVisible=false;
+            // },
             //修改数据发送给前端
             saveEdit(){
                 axios.post("/context/EditUpdate",this.pageBeanEdit).then(resp=>{
@@ -337,12 +343,19 @@
 
                     }
                 })
+            },
+            getUserName(){
+                axios.post("/context/getUserName").then(resp=>{
+                    this.user_name=resp.data.data;
+                })
             }
+
         },
 
         //上来就先把数据放到界面里
         created(){
             this.getResource();
+            this.getUserName();
         }
     });
 </script>

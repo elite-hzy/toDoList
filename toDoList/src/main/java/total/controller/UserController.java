@@ -26,6 +26,7 @@ public class UserController {
         ResultInfo resultInfo = userService.login(user);
         if (resultInfo.getSuccess()==true){
             User userSession = (User) resultInfo.getData();
+//            System.out.println("要存进session的值:"+userSession);
             //在session里放对象
             session.setAttribute("user",userSession);
         }

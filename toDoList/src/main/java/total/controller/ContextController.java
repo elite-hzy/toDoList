@@ -33,6 +33,14 @@ public class ContextController {
         System.out.println(contextList);
         return new ResultInfo(true,contextList);
     }
+    //把用户名返给网站
+    @RequestMapping("/getUserName")
+    public ResultInfo getUserName(){
+        User user = (User) session.getAttribute("user");
+        System.out.println("session接收到的数据："+user);
+        String name = user.getUserName();
+        return new ResultInfo(true,"成功",name);
+    }
 
     //正式代码,展示那些指定的数据
     @RequestMapping("test")
