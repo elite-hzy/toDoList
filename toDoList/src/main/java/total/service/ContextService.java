@@ -30,4 +30,6 @@ public interface ContextService {
 
     //删除数据
     void deleteTheContext(Integer contextID );
+
+    //测试获取数据,并且依次进行校验
 }

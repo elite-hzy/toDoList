@@ -12,6 +12,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+    <!-- 打包方式(默认为jar) (等会删除)-->
+    <packaging>war</packaging>
     <!-- 指定SpringBoot父工程-->
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -61,17 +63,27 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!--
+   配置tomcat启动器，就会排除spring-boot-starter-web中依赖过来的tomcat启动器
+   指定scope为provided: 代表打war包时，不需要它的依赖jar包(我们有自己的tomcat)
+-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
-<!--    <build>-->
-<!--        &lt;!&ndash;指定打包时候的名字&ndash;&gt;-->
-<!--        <finalName>ROOT</finalName>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+    <build>
+        <!--指定打包时候的名字-->
+        <finalName>todolist</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

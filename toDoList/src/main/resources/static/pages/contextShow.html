@@ -19,13 +19,13 @@
 <div id="app">
     <el-row>
         <el-col :span="21">
-            <el-page-header @back="exit" content="界面显示" title="退出"/>
+            <el-page-header @back="exit" :content="user_name+'大佬您好'" title="退出"/>
         </el-col>
         <el-col :span="3">
             <el-button type="primary" plain size="small" icon="el-icon-document" @click="showDialog">添加任务</el-button>
         </el-col>
     </el-row>
-            <el-link disabled>{{user_name}}大佬您好!</el-link>
+<!--            <el-link disabled>{{user_name}}大佬您好!</el-link>-->
     <!--表格部分-->
     <el-row>
         <el-col :span="24">
@@ -38,7 +38,7 @@
                 fixed
                 label="用户名">
             <template slot-scope="scope">
-  <span :style="{textDecoration:scope.row.situation==2?'line-through':''}">{{scope.row.userName}}</span>
+            <span :style="{textDecoration:scope.row.situation==2?'line-through':''}">{{scope.row.userName}}</span>
 <!--           <span>{{scope.row.userName}}</span>-->
 <!--                <span :style="{'text-decoration':scope.row.situation==1?'line-through':''}">{{scope.row.userName}}</span>-->
             </template>
@@ -59,6 +59,10 @@
         <el-table-column
                 label="操作">
 <!--            这里的handleClick(scope.row) 是会返回传进来参数-->
+            <!--
+             slot-scope="scope" 来取得作用域插槽:data绑定的数据，
+             scope可以随便替换其他名称，只是定义对象来代表取得的data数据，便于使用
+            -->
             <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 <el-button type="text" size="small" @click="showEdit(scope.row)">编辑</el-button>
