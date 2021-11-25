@@ -34,36 +34,27 @@
             border
             max-height="95%" style="width: 100%"
             >
-<!--        <el-table-column-->
-<!--                fixed-->
-<!--                label="用户名">-->
-<!--            <template slot-scope="scope">-->
-<!--            <span :style="{textDecoration:scope.row.situation==2?'line-through':''}">{{scope.row.userName}}</span>-->
-
+        <el-table-column
+                fixed
+                label="用户名">
+            <template slot-scope="scope">
+            <span :style="{textDecoration:scope.row.situation==2?'line-through':''}">{{scope.row.userName}}</span>
 <!--           <span>{{scope.row.userName}}</span>-->
 <!--                <span :style="{'text-decoration':scope.row.situation==1?'line-through':''}">{{scope.row.userName}}</span>-->
-<!--            </template>-->
-
-<!--        </el-table-column>-->
-<!--        <el-table-column-->
-<!--                prop="id"-->
-<!--                label="编号">-->
-<!--        </el-table-column>-->
-
-<!--                prop="context"-->
-        <el-table-column
-                label="文本内容">
-        <template slot-scope="scope">
-            <span :style="{'text-decoration':scope.row.situation==2?'line-through':''}">{{scope.row.context}}</span>
-        </template>
-        </el-table-column>
-
-<!--                prop="createTime"-->
-        <el-table-column
-                label="创建时间">
-            <template slot-scope="scope">
-                <span :style="{'text-decoration':scope.row.situation==2?'line-through':''}">{{scope.row.createTime}}</span>
             </template>
+
+        </el-table-column>
+        <el-table-column
+                prop="id"
+                label="编号">
+        </el-table-column>
+        <el-table-column
+                prop="createTime"
+                label="创建时间">
+        </el-table-column>
+        <el-table-column
+                prop="context"
+                label="文本内容">
         </el-table-column>
         <el-table-column
                 label="操作">
@@ -251,8 +242,7 @@
                         console.log("添加页面");
                         axios.post("/context/testCreate",this.form).then(resp=>{
                             this.$message.success('添加成功');
-                            this.dialogFormVisible=false;
-                            //     //3s后跳转
+                        //     //3s后跳转
                         //     let num=3;
                         //     setInterval(()=>{
                         //         num--;
@@ -302,8 +292,6 @@
                     this.postStatus =resp.data;
                     if(this.postStatus.success==true){
                         this.$message.success('修改成功');
-                        this.dialogEditVisible=false;
-
                         this.getResource();
                     }
                 })
@@ -316,8 +304,6 @@
                     let ResultInfo = resp.data;
                     if(ResultInfo.success==true){
                         this.$message.success('修改成功');
-                        this.dialogEditVisible=false;
-
                         //3s后跳转
                         this.getResource();
                     }else{
