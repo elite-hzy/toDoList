@@ -132,13 +132,14 @@
     new Vue({
         el: "#app",
         data: {
+            visible: false,
             tableData: {
                 userName: '',
                 id: '',
                 createTime: '',
                 context:'',
             },
-            //表单
+            //添加内容的表单
             form: {
                 context: '',
                 address: '',
@@ -161,7 +162,7 @@
                 contextID:'',
                 situation:'',
             },
-            //作为检测有没有校验成功的,例如传递
+            //作为检测有没有校验成功的,例如传递修改软件数据
             postStatus:'',
             //校验规则
             rules: {

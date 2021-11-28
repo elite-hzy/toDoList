@@ -26,4 +26,10 @@ public class UserServiceImpl implements UserService {
         }
         return new ResultInfo(true,"正确",byUser);
     }
+
+    //注册
+    @Override
+    public void createUser(String userName, String password) {
+        userDao.createNewUser(userName,password);
+    }
 }

@@ -10,6 +10,7 @@ import total.entity.User;
 import total.service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/login")
@@ -31,5 +32,14 @@ public class UserController {
             session.setAttribute("user",userSession);
         }
         return resultInfo;
+    }
+
+    @RequestMapping("/createUser")
+    public ResultInfo createUser(@RequestBody Map<String,Object> paramMap){
+        //先获取到2个元素
+        String userName = (String) paramMap.get("userName");
+        String password = (String) paramMap.get("password");
+        userService.createUser(userName,password);
+        return new ResultInfo(true,"添加成功");
     }
 }

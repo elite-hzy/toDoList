@@ -1,6 +1,7 @@
 package total.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import total.entity.User;
 
@@ -14,5 +15,7 @@ public interface UserDao extends BaseMapper<User> {
     @Select("select * from table_user where userName=#{userName} and password=#{password}")
     public User findByUser(String userName,String password);
 
-
+    //新建一个用户
+    @Select("insert into table_user values(#{userName},#{password},null)")
+    void createNewUser(@Param("userName")String userName, @Param("password")String password);
 }

@@ -14,4 +14,7 @@ public interface UserService {
      * @return
      */
     public ResultInfo login(User user);
+
+    //新建用户
+    void createUser(String userName,String password);
 }
