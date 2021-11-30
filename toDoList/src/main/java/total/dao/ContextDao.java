@@ -17,8 +17,8 @@ public interface ContextDao {
     List<Context>findContextById(Integer id);
 
     //添加内容
-    @Insert("insert into context (userName, id, context,createTime,situation) values(#{userName},#{id},#{context},#{createTime},1)")
-    void save(@Param("userName") String userName, @Param("id")Integer id, @Param("context") String context,@Param("createTime") String createTime);
+    @Insert("insert into context (userName, id, context,createTime,situation,Expiration) values(#{userName},#{id},#{context},#{createTime},1,#{Expiration})")
+    void save(@Param("userName") String userName, @Param("id")Integer id, @Param("context") String context,@Param("createTime") String createTime,@Param("Expiration")Integer Expiration);
 
     //先显示要被修改的内容
     @Select("select *from context where contextID=#{contextID}")

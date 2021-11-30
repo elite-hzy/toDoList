@@ -31,4 +31,7 @@ public class Context implements Serializable {
     private Integer situation;
 
     private Integer contextID;
+
+    //这里是任务的过期时间(单位为小时)
+    private Integer Expiration;
 }

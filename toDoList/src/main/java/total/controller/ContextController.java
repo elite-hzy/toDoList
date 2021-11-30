@@ -37,7 +37,7 @@ public class ContextController {
     @RequestMapping("/getUserName")
     public ResultInfo getUserName(){
         User user = (User) session.getAttribute("user");
-        System.out.println("session接收到的数据："+user);
+//        System.out.println("session接收到的数据："+user);
         String name = user.getUserName();
         return new ResultInfo(true,"成功",name);
     }
@@ -68,10 +68,15 @@ public class ContextController {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = format.format(date);
         String contact = (String) paramMap.get("context");
+        String Expiration1 = (String) paramMap.get("Expiration");
+//        System.out.println(Expiration1);
+        Integer Expiration = Integer.parseInt(Expiration1);
         Map<String, Object> stringMap = new HashMap<>();
         stringMap.put("id",id);
         stringMap.put("createTime",time);
         stringMap.put("contact",contact);
+        stringMap.put("Expiration",Expiration);
+        System.out.println(stringMap);
 //        Context context = new Context();
 //        context.setCreateTime(Timestamp.valueOf("2021-11-20 16:38:02"));
         contextService.save(stringMap);
