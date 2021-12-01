@@ -73,10 +73,12 @@
              scope可以随便替换其他名称，只是定义对象来代表取得的data数据，便于使用
             -->
             <template slot-scope="scope">
-                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+<!--                <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
                 <el-button type="text" size="small" @click="showEdit(scope.row)">编辑</el-button>
-                <el-button type="text" size="small" @click="deleteContext(scope.row)">删除</el-button>
-                <el-button type="text" size="small" @click="editSituation(scope.row)">更改完成情况</el-button>
+<!--                写三元运算符-->
+                <el-button type="text" size="small" @click="deleteContext(scope.row)" >删除</el-button>
+                <el-button type="text" size="small" @click="editSituation(scope.row)" :disabled="scope.row.situation==2?true:false">更改完成情况</el-button>
+                <el-button type="text" size="small" @click="handleClick(scope.row)" >扩展</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -127,6 +129,27 @@
             <el-button type="primary" @click="save" icon="el-icon-milk-tea">确 定</el-button>
         </div>
     </el-dialog>
+    <!--
+新增和修改对话框
+close-on-click-modal:是否可以通过点击 modal 关闭 Dialog
+-->
+    <el-dialog title="显示后期要编辑的内容" :visible.sync="dialogShowImformationVisible" width="45%" @close="cancel" :close-on-click-modal="false">
+        <!-- status-icon 为输入框添加了表示校验结果的反馈图标-->
+        <el-form :model="form" :rules="rules" label-width="100px" size="small" ref="addressForm" status-icon>
+            <!-- prop属性用于表单验证 -->
+            <el-form-item label="添加的内容" prop="context">
+                <el-input v-model="form.context" placeholder="请输入内容" prefix-icon="el-icon-user" style="width:90%"/>
+            </el-form-item>
+            <el-form-item label="设置多少小时后过期" prop="Expiration">
+                <el-input v-model="form.Expiration" placeholder="请输入内容" prefix-icon="el-icon-user" style="width:90%"/>
+            </el-form-item>
+            <!--            以后这里还要再添加其他的-->
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="cancel" icon="el-icon-ice-cream-round">取 消</el-button>
+            <el-button type="primary" @click="save" icon="el-icon-milk-tea">确 定</el-button>
+        </div>
+    </el-dialog>
 </div>
 </body>
 </html>
@@ -135,6 +158,8 @@
     new Vue({
         el: "#app",
         data: {
+            //显示详细任务框
+            dialogShowImformationVisible:false,
             visible: false,
             tableData: {
                 userName: '',
