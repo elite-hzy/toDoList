@@ -1,8 +1,8 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql:///todolist
-#    url: jdbc:mysql://42.193.127.236/dotolist
+#    url: jdbc:mysql:///todolist
+    url: jdbc:mysql://42.193.127.236/dotolist
     username: root
     password: root
   redis:

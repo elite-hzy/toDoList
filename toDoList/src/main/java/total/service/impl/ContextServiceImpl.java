@@ -46,13 +46,16 @@ public class ContextServiceImpl implements ContextService {
         for (Context context : contextById) {
             if (context.getSituation()==1){
                 //先把每个函数的过期时间拿出来(单位 时)
-                Integer expiration = context.getExpiration();
+//                Integer expiration = context.getExpiration();
+                Date expiration = context.getExpiration();
+//                System.out.println(expiration);
                 //然后进行调用,对时间进行判断
                 Date date = new Date();
                 long currentTime = date.getTime();
-                long missonTime = context.getCreateTime().getTime();
+//                long missonTime = context.getCreateTime().getTime();
+                long missontime = expiration.getTime();
                 //如果当前时间  减去  （生成任务的时间和设置过期时间）大于0证明已经过期
-                if (currentTime-missonTime-expiration*3600000>0){
+                if (currentTime>missontime){
                     contextDao.updateSituation(context.getSituation(),context.getContextID());
                 }
                 //毫秒转秒1000 秒转分60  86400 000'
@@ -87,12 +90,13 @@ public class ContextServiceImpl implements ContextService {
 //    }
     @Override
     public void save(Map<String,Object> paramMap) {
-        System.out.println(paramMap);
+//        System.out.println(paramMap);
 //        contextDao.save();
         Integer id = (Integer) paramMap.get("id");
         String createTime = (String) paramMap.get("createTime");
         String contact = (String) paramMap.get("contact");
-        Integer Expiration = (Integer) paramMap.get("Expiration");
+        String  Expiration = (String) paramMap.get("Expiration");
+        System.out.println("Expiration = " + Expiration);
         contextDao.save("test",id,contact,createTime,Expiration);
     }
 

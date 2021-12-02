@@ -16,9 +16,14 @@ public interface ContextDao {
     @Select("select * from context where id=#{id}")
     List<Context>findContextById(Integer id);
 
-    //添加内容
-    @Insert("insert into context (userName, id, context,createTime,situation,Expiration) values(#{userName},#{id},#{context},#{createTime},1,#{Expiration})")
-    void save(@Param("userName") String userName, @Param("id")Integer id, @Param("context") String context,@Param("createTime") String createTime,@Param("Expiration")Integer Expiration);
+    //添加内容  这里是旧代码,这里存的过期时间是
+//    @Insert("insert into context (userName, id, context,createTime,situation,Expiration) values(#{userName},#{id},#{context},#{createTime},1,#{Expiration})")
+//    void save(@Param("userName") String userName, @Param("id")Integer id, @Param("context") String context,@Param("createTime") String createTime,@Param("Expiration")Integer Expiration);
+
+    //存新内容 这里的过期时间存的是datetime
+  @Insert("insert into context (userName, id, context,createTime,situation,Expiration) values(#{userName},#{id},#{context},#{createTime},1,#{Expiration})")
+    void save(@Param("userName") String userName, @Param("id")Integer id, @Param("context") String context,@Param("createTime") String createTime,@Param("Expiration")String Expiration);
+
 
     //先显示要被修改的内容
     @Select("select *from context where contextID=#{contextID}")

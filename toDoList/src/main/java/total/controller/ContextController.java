@@ -11,6 +11,7 @@ import total.service.ContextService;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -60,23 +61,42 @@ public class ContextController {
     //新建内容
     //byUser已经存进了id,等会添加内容的时候直接从这里获取就行
     @RequestMapping("/testCreate")
-    public void push(HttpSession session, @RequestBody Map<String,Object>paramMap){
+    public void push(HttpSession session, @RequestBody Map<String,Object>paramMap) throws ParseException {
 //        //如果没有传500
         User user = (User) session.getAttribute("user");
         Integer id = user.getId();
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = format.format(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = sdf.format(date);
         String contact = (String) paramMap.get("context");
-        String Expiration1 = (String) paramMap.get("Expiration");
-//        System.out.println(Expiration1);
-        Integer Expiration = Integer.parseInt(Expiration1);
+//        String Expiration1 = (String) paramMap.get("Expiration");
+        //提取出来的新时间戳
+        String newExpiration = (String) paramMap.get("newExpiration");
+        //System.out.println("返回的时间:"+newExpiration);//返回的时间:2021-12-17T10:01:00.000Z
+        String[] ts = newExpiration.split("T");
+        //首先要先切割出T 切割之后切割里面的.
+        //切割出来的内容2021-12-02
+        //切割出来的内容06:36:39.000Z
+        //1)当需要用“.”分割字符串,需要用split(“\\.”)或者split(“[.]”)
+        String[] split = ts[1].split("[.]");
+        String newDataBase = "";
+        newDataBase = ts[0]+" "+split[0];
+//        System.out.println("newDataBase = " + newDataBase);//newDataBase = 2021-12-02 06:57:06
+        //字符串转日期
+        Date parse = sdf.parse(newDataBase);//因为这里newDateBase是没加8小时的时间
+        //思路就是字符串转成长整型 长整型加8小时的毫秒数  然后转成Date类,通过simpleDateFormat来转成字符串
+        long time1 = parse.getTime();//1638407627000
+        //加8小时  x1000到秒  x60到分  x60到时 x8
+        time1 =time1+8000*60*60;
+        Date date1 = new Date(time1);
+        String format1 = sdf.format(date1);// 2021-12-02 17:16:28
+        //转码成功的函数
+//        Integer Expiration = Integer.parseInt(Expiration1);
         Map<String, Object> stringMap = new HashMap<>();
         stringMap.put("id",id);
         stringMap.put("createTime",time);
         stringMap.put("contact",contact);
-        stringMap.put("Expiration",Expiration);
-        System.out.println(stringMap);
+        stringMap.put("Expiration",format1);
 //        Context context = new Context();
 //        context.setCreateTime(Timestamp.valueOf("2021-11-20 16:38:02"));
         contextService.save(stringMap);
