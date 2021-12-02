@@ -49,6 +49,7 @@ public class ContextController {
         User user = (User) session.getAttribute("user");
         Integer id = user.getId();
         List<Context> contextById = contextService.findContextById(id);
+        System.out.println("contextById = " + contextById);
         return new ResultInfo(true,contextById);
     }
 

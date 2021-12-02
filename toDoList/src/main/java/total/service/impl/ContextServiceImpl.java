@@ -63,6 +63,7 @@ public class ContextServiceImpl implements ContextService {
             }
         }
         List<Context> contextById1 = contextDao.findContextById(id);
+//        System.out.println("contextById1 = " + contextById1);        //contextById1 = [Context(userName=test, id=1, createTime=Thu Dec 02 21:36:17 CST 2021, context=1312, situation=2, contextID=37, Expiration=Thu Dec 02 21:36:17 CST 2021),
         return contextById1;
     }
 

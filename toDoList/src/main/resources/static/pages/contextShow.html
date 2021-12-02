@@ -66,6 +66,12 @@
             </template>
         </el-table-column>
         <el-table-column
+                label="过期时间">
+            <template slot-scope="scope">
+                <span :style="{'text-decoration':scope.row.situation==2?'line-through':''}">{{scope.row.expiration}}</span>
+            </template>
+        </el-table-column>
+        <el-table-column
                 label="操作">
 <!--            这里的handleClick(scope.row) 是会返回传进来参数-->
             <!--
@@ -184,8 +190,6 @@ close-on-click-modal:是否可以通过点击 modal 关闭 Dialog
             //添加内容的表单
             form: {
                 context: '',
-                address: '',
-                Expiration:0,
                 newExpiration:'',
             },
             editShow:{
@@ -238,7 +242,8 @@ close-on-click-modal:是否可以通过点击 modal 关闭 Dialog
 
                     }
                     this.pageBean.data.map(vim=>{
-                        vim.createTime=this.format(vim.createTime)
+                        vim.createTime=this.format(vim.createTime);
+                        vim.expiration=this.format(vim.expiration);
                     })
                 })
             },
